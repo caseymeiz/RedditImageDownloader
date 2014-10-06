@@ -105,12 +105,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, APIControllerProtocol {
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
                     if !(error? != nil) {
                         //set image to requested resource
-                        var image = NSImage(data: data)
+//                        var image = NSImage(data: data)
 //                        println(imgURL)
                         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
                         let destinationPath = documentsPath.stringByAppendingPathComponent("filename.jpg")
 //                        writeToFile(image,1.0).writeToFile(destinationPath, atomically:true)
-
+                        var image: NSData = NSData(contentsOfURL: imgURL)!
+                        var randName = Int(arc4random_uniform(7))
+                        image.writeToFile("/Users/Tyler/Desktop/\(randName).jpg", atomically: true)
 //                        self.newImage.image = image
                     } else {
                         //If request fails...
