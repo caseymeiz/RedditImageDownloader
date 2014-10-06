@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Add sort options as submenu
         for sort in sortOptions {
             var item: NSMenuItem = NSMenuItem()
-            item.title = sort as? String
+            item.title = sort as String
             item.keyEquivalent = ""
             item.action = Selector("setActiveSort:")
 //            item.state = 1
@@ -69,7 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             var active : NSString = filterDefault as NSString
             sortFilter.selectItemWithTitle(active)
             println(active)
-            subSort.itemWithTitle(active).state = 1
+            subSort.itemWithTitle(active)?.state = 1
         }
     }
     
@@ -79,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var a = 0
         while a < subSort.numberOfItems {
             var filter = subSort.itemAtIndex(a)
-            filter.state = 0
+            filter?.state = 0
             a++
         }
         //Make selected filter active and store value in Defaults
@@ -91,7 +91,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func downloadPressed(sender: AnyObject) {
         let subreddit: NSString = NSString(string: subredditField.stringValue)
-        let sortBy: NSString = NSString(string: sortFilter.titleOfSelectedItem)
+        let sortBy: NSString = NSString(string: sortFilter.titleOfSelectedItem!)
         var sort = sortBy.lowercaseString
         let nsfw: Bool = Bool(nsfwMarked.integerValue)
         downloadClass.startController(subreddit, sortBy: sort, markNSFW: nsfw)
@@ -114,13 +114,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         if let storedSubreddit : AnyObject = userDefaults.objectForKey("subreddit") {
             //set subreddit string to stored value
-            subredditField.stringValue = storedSubreddit as? String
+            subredditField.stringValue = storedSubreddit as String
         }
         
         //Get screen resolution
         let ms = NSScreen.mainScreen()
-        let frame = ms.frame
-        println(frame.size.width)
+        let frame = ms?.frame
+        println(frame?.size.width)
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
