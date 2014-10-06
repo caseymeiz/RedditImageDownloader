@@ -12,6 +12,7 @@
 		2F1B17D319DDB48E0079EAF9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F1B17D119DDB48E0079EAF9 /* MainMenu.xib */; };
 		2F1B17DF19DDB48E0079EAF9 /* RedditImageDownloaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B17DE19DDB48E0079EAF9 /* RedditImageDownloaderTests.swift */; };
 		2F1B17ED19DDBC980079EAF9 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1B17EC19DDBC980079EAF9 /* APIController.swift */; };
+		D405B72319E2BE7900DFC736 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D405B72219E2BE7900DFC736 /* DownloadController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		2F1B17DD19DDB48E0079EAF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2F1B17DE19DDB48E0079EAF9 /* RedditImageDownloaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedditImageDownloaderTests.swift; sourceTree = "<group>"; };
 		2F1B17EC19DDBC980079EAF9 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
+		D405B72219E2BE7900DFC736 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				2F1B17CD19DDB48E0079EAF9 /* AppDelegate.swift */,
 				2F1B17EC19DDBC980079EAF9 /* APIController.swift */,
+				D405B72219E2BE7900DFC736 /* DownloadController.swift */,
 				2F1B17CF19DDB48E0079EAF9 /* Images.xcassets */,
 				2F1B17D119DDB48E0079EAF9 /* MainMenu.xib */,
 				2F1B17CB19DDB48E0079EAF9 /* Supporting Files */,
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D405B72319E2BE7900DFC736 /* DownloadController.swift in Sources */,
 				2F1B17ED19DDBC980079EAF9 /* APIController.swift in Sources */,
 				2F1B17CE19DDB48E0079EAF9 /* AppDelegate.swift in Sources */,
 			);
@@ -277,7 +281,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -314,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -397,6 +401,7 @@
 				2F1B17E419DDB48E0079EAF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2F1B17E519DDB48E0079EAF9 /* Build configuration list for PBXNativeTarget "RedditImageDownloaderTests" */ = {
 			isa = XCConfigurationList;
@@ -405,6 +410,7 @@
 				2F1B17E719DDB48E0079EAF9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

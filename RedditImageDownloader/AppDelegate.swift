@@ -11,9 +11,11 @@ import AppKit
 import Foundation
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, APIControllerProtocol {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
-    var api: APIController?
+
+    var downloadClass = DownloadController()
+    
 
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var downloadButton: NSButton!
@@ -87,50 +89,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, APIControllerProtocol {
         userDefaults.setObject(sender.title, forKey: "filter")
     }
     
-    func didReceiveAPIResults(results: NSArray) {
-        println(results)
-        for link in results {
-            let stringLink = link as String
-            //Check to make sure that the string is actually pointing to a file
-            if stringLink.lowercaseString.rangeOfString(".jpg") != nil {2
-                
-                //Convert string to url
-                var imgURL: NSURL = NSURL(string: stringLink)!
-                
-                //Download an NSData representation of the image from URL
-                var request: NSURLRequest = NSURLRequest(URL: imgURL)
-                
-                var urlConnection: NSURLConnection = NSURLConnection(request: request, delegate: self)!
-                //Make request to download URL
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-                    if !(error? != nil) {
-                        //set image to requested resource
-//                        var image = NSImage(data: data)
-//                        println(imgURL)
-                        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-                        let destinationPath = documentsPath.stringByAppendingPathComponent("filename.jpg")
-//                        writeToFile(image,1.0).writeToFile(destinationPath, atomically:true)
-                        var image: NSData = NSData(contentsOfURL: imgURL)!
-                        var randName = Int(arc4random_uniform(7))
-                        image.writeToFile("/Users/Tyler/Desktop/\(randName).jpg", atomically: true)
-//                        self.newImage.image = image
-                    } else {
-                        //If request fails...
-                        println("error: \(error.localizedDescription)")
-                    }
-                })
-            }
-        }
-    }
-    
     @IBAction func downloadPressed(sender: AnyObject) {
-        api = APIController(delegate: self)
-        
         let subreddit: NSString = NSString(string: subredditField.stringValue)
         let sortBy: NSString = NSString(string: sortFilter.titleOfSelectedItem)
         var sort = sortBy.lowercaseString
         let nsfw: Bool = Bool(nsfwMarked.integerValue)
-        api!.getSubreddit(subreddit, sortBy: sort, markNSFW: nsfw)
+        downloadClass.startController(subreddit, sortBy: sort, markNSFW: nsfw)
     }
 
     func setWindowVisible(sender: AnyObject) {
