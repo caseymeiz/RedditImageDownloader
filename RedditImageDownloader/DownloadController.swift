@@ -29,19 +29,18 @@ public class DownloadController: APIControllerProtocol {
             if stringLink.lowercaseString.rangeOfString(".jpg") != nil {2
                 
                 //Convert string to url
-                var imgURL: NSURL = NSURL(string: stringLink)!
+                let imgURL: NSURL = NSURL(string: stringLink)!
                 
                 //Download an NSData representation of the image from URL
-                var request: NSURLRequest = NSURLRequest(URL: imgURL)
+                let request: NSURLRequest = NSURLRequest(URL: imgURL)
                 
-                var urlConnection: NSURLConnection = NSURLConnection(request: request, delegate: self)!
                 //Make request to download URL
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
                     if !(error != nil) {
                         //set image to requested resource
-                        var image: NSData = NSData(contentsOfURL: imgURL)!
+                        let image: NSData = NSData(contentsOfURL: imgURL)!
                         let HomePath = NSHomeDirectory() as String
-                        var randName = Int(arc4random_uniform(1000))
+                        let randName = Int(arc4random_uniform(1000))
                         image.writeToFile("\(HomePath)/Pictures/\(randName).jpg", atomically: true)
                         
 //                        self.newImage.image = image

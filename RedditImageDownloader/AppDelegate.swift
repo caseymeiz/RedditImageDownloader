@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         menuItem.title = "Preferences..."
         //Open view on button click
-        menuItem.action = Selector("setWindowVisible:")
+        menuItem.action = #selector(setWindowVisible(_:))
         menuItem.keyEquivalent = ""
         menu.addItem(menuItem)
 
@@ -54,10 +54,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         //Add sort options as submenu
         for sort in sortOptions {
-            var item: NSMenuItem = NSMenuItem()
+            let item: NSMenuItem = NSMenuItem()
             item.title = sort as! String
             item.keyEquivalent = ""
-            item.action = Selector("setActiveSort:")
+            item.action = #selector(setActiveSort(_:))
 //            item.state = 1
             subSort.addItem(item)
         }
@@ -66,7 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Test receiving menu
         let userDefaults = NSUserDefaults.standardUserDefaults()
         if let filterDefault : AnyObject = userDefaults.objectForKey("filter") {
-            var active : NSString = filterDefault as! NSString
+            let active : NSString = filterDefault as! NSString
             sortFilter.selectItemWithTitle(active as String)
             print(active)
             subSort.itemWithTitle(active as String)?.state = 1
@@ -75,12 +75,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func setActiveSort(sender: NSMenuItem) {
         //Turn off all other active filters
-        let allSorts = subSort.itemArray
         var a = 0
         while a < subSort.numberOfItems {
             let filter = subSort.itemAtIndex(a)
             filter?.state = 0
-            a++
+            a += 1
         }
         //Make selected filter active and store value in Defaults
         sender.state = 1
@@ -101,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.window!.orderFront(self)
     }
 
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
         //Don't display application window at launch
         self.window!.orderOut(self)
@@ -123,7 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print(frame?.size.width)
     }
 
-    func applicationWillTerminate(aNotification: NSNotification?) {
+    func applicationWillTerminate(aNotification: NSNotification) {
         // Insert code here to tear down your application
         
         //Set the user preferences on exit.. this should be moved to onButtonState
