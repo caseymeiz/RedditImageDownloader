@@ -25,24 +25,25 @@ class APIController {
         let session = NSURLSession.sharedSession()
 
         let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
-            println("Task Completed")
+            print("Task Completed")
             if(error != nil) {
                 //If there's an error, print it to the console
-                println(error.localizedDescription)
+                print(error!.localizedDescription)
             }
             var jsonError: NSError?
             var urlArray = [AnyObject]()
-            if let json: AnyObject = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &jsonError) {
+            do {
+                let json: AnyObject = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
                 if let data = json["data"] as? NSDictionary {
                     if let children = data["children"] as? NSArray {
                         for child in children {
                             if let data = child["data"] as? NSDictionary {
                                 if nsfw === true {
-                                    println("NSFW Enabled")
+                                    print("NSFW Enabled")
                                     let url = data["url"] as? String
                                     urlArray.append(url!)
                                 } else {
-                                    println("NSFW Disabled")
+                                    print("NSFW Disabled")
                                     if data["over_18"] === false {
                                         let url = data["url"] as? String
                                         urlArray.append(url!)
@@ -53,13 +54,16 @@ class APIController {
                     }
                 } else {
                     //If no data is returned
-                    println("Invalid Subreddit")
+                    print("Invalid Subreddit")
                 }
-            } else {
-                println("Invalid Subreddit")
+            } catch let error as NSError {
+                jsonError = error
+                print("Invalid Subreddit")
                 if let unwrappedError = jsonError {
-                    println("json error: \(unwrappedError)")
+                    print("json error: \(unwrappedError)")
                 }
+            } catch {
+                fatalError()
             }
             
             self.delegate.didReceiveAPIResults(urlArray)
@@ -68,8 +72,8 @@ class APIController {
     }
     
     func getSubreddit(searchTerm: String, sortBy: String, markNSFW: AnyObject) {
-        if let subredditQuery = searchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
-            let urlPath = "http://reddit.com/r/\(subredditQuery)/\(sortBy).json"
+        if let subredditQuery = searchTerm.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet()) {
+            let urlPath = "https://reddit.com/r/\(subredditQuery)/\(sortBy).json"
             get(urlPath, nsfw: markNSFW)
         }
     }
