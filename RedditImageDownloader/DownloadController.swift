@@ -22,9 +22,9 @@ public class DownloadController: APIControllerProtocol {
     }
     
     func didReceiveAPIResults(results: NSArray) {
-        println(results)
+        print(results)
         for link in results {
-            let stringLink = link as String
+            let stringLink = link as! String
             //Check to make sure that the string is actually pointing to a file
             if stringLink.lowercaseString.rangeOfString(".jpg") != nil {2
                 
@@ -36,8 +36,8 @@ public class DownloadController: APIControllerProtocol {
                 
                 var urlConnection: NSURLConnection = NSURLConnection(request: request, delegate: self)!
                 //Make request to download URL
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-                    if !(error? != nil) {
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+                    if !(error != nil) {
                         //set image to requested resource
                         var image: NSData = NSData(contentsOfURL: imgURL)!
                         let HomePath = NSHomeDirectory() as String
@@ -47,7 +47,7 @@ public class DownloadController: APIControllerProtocol {
 //                        self.newImage.image = image
                     } else {
                         //If request fails...
-                        println("error: \(error.localizedDescription)")
+                        print("error: \(error!.localizedDescription)")
                     }
                 })
             }

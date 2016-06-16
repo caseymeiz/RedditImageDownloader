@@ -47,7 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         //define sorting filters
         let sortOptions = NSArray(array: ["Hot","New","Top","Rising","Controversial"])
-        sortFilter.addItemsWithTitles(sortOptions)
+        sortFilter.addItemsWithTitles(sortOptions as! [String])
         
         sortItem.title = "Sort By"
         menu.addItem(sortItem)
@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Add sort options as submenu
         for sort in sortOptions {
             var item: NSMenuItem = NSMenuItem()
-            item.title = sort as String
+            item.title = sort as! String
             item.keyEquivalent = ""
             item.action = Selector("setActiveSort:")
 //            item.state = 1
@@ -66,10 +66,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //Test receiving menu
         let userDefaults = NSUserDefaults.standardUserDefaults()
         if let filterDefault : AnyObject = userDefaults.objectForKey("filter") {
-            var active : NSString = filterDefault as NSString
-            sortFilter.selectItemWithTitle(active)
-            println(active)
-            subSort.itemWithTitle(active)?.state = 1
+            var active : NSString = filterDefault as! NSString
+            sortFilter.selectItemWithTitle(active as String)
+            print(active)
+            subSort.itemWithTitle(active as String)?.state = 1
         }
     }
     
@@ -78,7 +78,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let allSorts = subSort.itemArray
         var a = 0
         while a < subSort.numberOfItems {
-            var filter = subSort.itemAtIndex(a)
+            let filter = subSort.itemAtIndex(a)
             filter?.state = 0
             a++
         }
@@ -92,9 +92,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func downloadPressed(sender: AnyObject) {
         let subreddit: NSString = NSString(string: subredditField.stringValue)
         let sortBy: NSString = NSString(string: sortFilter.titleOfSelectedItem!)
-        var sort = sortBy.lowercaseString
+        let sort = sortBy.lowercaseString
         let nsfw: Bool = Bool(nsfwMarked.integerValue)
-        downloadClass.startController(subreddit, sortBy: sort, markNSFW: nsfw)
+        downloadClass.startController(subreddit as String, sortBy: sort, markNSFW: nsfw)
     }
 
     func setWindowVisible(sender: AnyObject) {
@@ -114,13 +114,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         if let storedSubreddit : AnyObject = userDefaults.objectForKey("subreddit") {
             //set subreddit string to stored value
-            subredditField.stringValue = storedSubreddit as String
+            subredditField.stringValue = storedSubreddit as! String
         }
         
         //Get screen resolution
         let ms = NSScreen.mainScreen()
         let frame = ms?.frame
-        println(frame?.size.width)
+        print(frame?.size.width)
     }
 
     func applicationWillTerminate(aNotification: NSNotification?) {
