@@ -73,7 +73,7 @@ class APIController {
     
     func getSubreddit(searchTerm: String, sortBy: String, markNSFW: AnyObject) {
         if let subredditQuery = searchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
-            let urlPath = "http://reddit.com/r/\(subredditQuery)/\(sortBy).json"
+            let urlPath = "https://reddit.com/r/\(subredditQuery)/\(sortBy).json"
             get(urlPath, nsfw: markNSFW)
         }
     }
